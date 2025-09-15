@@ -3,9 +3,9 @@ package me.sungJ.productManager.Presentation;
 import me.sungJ.productManager.Application.SimpleProductService;
 import me.sungJ.productManager.Domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -18,7 +18,35 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public Product createProduct(@RequestBody Product product) {
-        return simpleProductService.add(product);
+    public ProductDto createProduct(@RequestBody ProductDto productDto) {
+        return simpleProductService.add(productDto);
     }
+
+    @GetMapping("/products/{id}")
+    public ProductDto findProductById(@PathVariable Long id) {
+        return simpleProductService.findById(id);
+    }
+
+    @GetMapping("/products")
+    public List<ProductDto> findProducts(@RequestParam(required = false) String name )
+    {
+        if (null == name)
+            return  simpleProductService.findAll();
+
+        return simpleProductService.findByNameContaining(name);
+    }
+
+    @PutMapping("/products/{id}")
+    public ProductDto updateProduct (
+        @PathVariable Long id, @RequestBody ProductDto productDto) {
+        productDto.setId(id);
+        return simpleProductService.update(productDto);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        simpleProductService.delete(id);
+    }
+
+
 }

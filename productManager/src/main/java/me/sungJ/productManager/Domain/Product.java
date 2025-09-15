@@ -1,5 +1,7 @@
 package me.sungJ.productManager.Domain;
 
+import java.util.Objects;
+
 public class Product {
     private Long id;
     private String name;
@@ -10,20 +12,20 @@ public class Product {
         this.id = id;
     }
 
-
-    public Long getId() {
-        return id;
+    public Boolean sameId(Long id) {
+        return this.id.equals(id);
     }
 
-    public String getName() {
-        return name;
+    public Boolean containsName(String name) {
+        return this.name.contains(name);
     }
 
-    public Integer getPrice() {
-        return price;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
     }
 
-    public Integer getAmount() {
-        return amount;
-    }
 }
