@@ -1,5 +1,6 @@
 package me.sungJ.productManager.Presentation;
 
+import jakarta.validation.Valid;
 import me.sungJ.productManager.Application.SimpleProductService;
 import me.sungJ.productManager.Domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ProductDto createProduct(@RequestBody ProductDto productDto) {
+    public ProductDto createProduct(@Valid @RequestBody ProductDto productDto) {
         return simpleProductService.add(productDto);
     }
 

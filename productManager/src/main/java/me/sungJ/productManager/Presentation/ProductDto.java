@@ -1,5 +1,7 @@
 package me.sungJ.productManager.Presentation;
 
+import jakarta.validation.constraints.NotNull;
+
 public class ProductDto {
     private Long id;
     private String name;
@@ -12,14 +14,17 @@ public class ProductDto {
         this.id = id;
     }
 
+    @NotNull
     public void setName(String name) {
         this.name = name;
     }
 
+    @NotNull
     public void setPrice(Integer price) {
         this.price = price;
     }
 
+    @NotNull
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
