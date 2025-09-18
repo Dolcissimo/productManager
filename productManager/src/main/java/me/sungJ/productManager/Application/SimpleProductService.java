@@ -26,6 +26,7 @@ public class SimpleProductService {
     public ProductDto add(ProductDto productDto) {
         // 1. ProductDto를 Product로 변환
         Product product = modelMapper.map(productDto, Product.class);
+        //유효성 검사
         validationService.checkvalid(product);
 
         // 2. 레포지토리를 호출
