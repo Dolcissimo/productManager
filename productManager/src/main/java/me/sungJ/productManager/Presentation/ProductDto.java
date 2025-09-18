@@ -4,8 +4,14 @@ import jakarta.validation.constraints.NotNull;
 
 public class ProductDto {
     private Long id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private Integer price;
+
+    @NotNull
     private Integer amount;
 
 
@@ -14,17 +20,14 @@ public class ProductDto {
         this.id = id;
     }
 
-    @NotNull
     public void setName(String name) {
         this.name = name;
     }
 
-    @NotNull
     public void setPrice(Integer price) {
         this.price = price;
     }
 
-    @NotNull
     public void setAmount(Integer amount) {
         this.amount = amount;
     }

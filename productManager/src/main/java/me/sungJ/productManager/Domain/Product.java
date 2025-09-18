@@ -21,7 +21,17 @@ public class Product {
     @Min(0)
     private Integer amount;
 
+    public String getName() {
+        return name;
+    }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -34,6 +44,7 @@ public class Product {
     public Boolean containsName(String name) {
         return this.name.contains(name);
     }
+
 
     @Override
     public boolean equals(Object o) {
