@@ -21,7 +21,18 @@ public class Product {
     @Min(0)
     private Integer amount;
 
+    public Product() {
 
+    }
+
+    public Product(Long id, String name, Integer price, Integer amount) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+    }
+
+    //getter
     public Long getId() {
         return id;
     }
@@ -38,6 +49,7 @@ public class Product {
         return amount;
     }
 
+    //setter
     public void setId(Long id) {
         this.id = id;
     }
@@ -53,6 +65,9 @@ public class Product {
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
+
+
+
 
     public Boolean sameId(Long id) {
         return this.id.equals(id);
