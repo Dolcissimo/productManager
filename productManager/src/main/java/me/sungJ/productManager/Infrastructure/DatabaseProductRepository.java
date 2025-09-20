@@ -1,7 +1,9 @@
 package me.sungJ.productManager.Infrastructure;
 
 import me.sungJ.productManager.Domain.Product;
+import me.sungJ.productManager.Domain.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -16,7 +18,8 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class DatabaseProductRepository {
+@Profile("prod")
+public class DatabaseProductRepository implements ProductRepository {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
