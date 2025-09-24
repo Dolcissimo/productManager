@@ -13,7 +13,9 @@ import java.util.concurrent.atomic.AtomicLong;
 @Repository
 @Profile("test")
 public class ListProductRepository implements ProductRepository {
+    //스레드 세이프하지 않은 ArrayList 대신 CopyOnWriteArrayList 사용
     private List<Product> products = new CopyOnWriteArrayList<>();
+    //스레드 세이프한 AtomicLong 사용
     private AtomicLong sequence = new AtomicLong(1L);
 
     public Product add(Product product) {

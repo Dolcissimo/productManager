@@ -44,4 +44,38 @@ class SimpleProductServiceUnitTest {
         assertTrue(savedProductDto.getAmount().equals(productDto.getAmount()));
     }
 
+    @Test
+    @DisplayName("상품 ID로 조회하면 해당 상품이 반환되어야 합니다.")
+    void productFindByIdTest() {
+        Long PRODUCT_ID = 1L;
+        Product product = new Product(PRODUCT_ID, "노트", 1000, 50);
+
+        when(productRepository.findById(PRODUCT_ID)).thenReturn(product);
+
+        ProductDto foundProductDto = simpleProductService.findById(PRODUCT_ID);
+
+        assertTrue(foundProductDto.getId().equals(PRODUCT_ID));
+        assertTrue(foundProductDto.getName().equals(product.getName()));
+        assertTrue(foundProductDto.getPrice().equals(product.getPrice()));
+        assertTrue(foundProductDto.getAmount().equals(product.getAmount()));
+    }
+
+    @Test
+    @DisplayName("상품 수정 후에는 수정된 값이 반영되어야 합니다.")
+    void productUpdateTest() {
+        Long PRODUCT_ID = 1L;
+        ProductDto updateDto = new ProductDto(PRODUCT_ID, "지우개", 500, 30);
+        Product updatedProduct = ProductDto.toEntity(updateDto);
+
+        when(productRepository.update(any())).thenReturn(updatedProduct);
+
+        ProductDto resultDto = simpleProductService.update(updateDto);
+
+        assertTrue(resultDto.getId().equals(PRODUCT_ID));
+        assertTrue(resultDto.getName().equals(updateDto.getName()));
+        assertTrue(resultDto.getPrice().equals(updateDto.getPrice()));
+        assertTrue(resultDto.getAmount().equals(updateDto.getAmount()));
+    }
+
+
 }
