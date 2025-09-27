@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>제품 상세</title>
+    <script>
+        let productId;
+
+        async function loadProduct() {
+            const params = new URLSearchParams(window.location.search);
+            productId = params.get('id');
+            if (!productId) {
+                alert('잘못된 접근입니다.');
+                return;
+            }
+
+            const res = await fetch(`/products/${productId}`);
+            if (!res.ok) {
+                alert('제품 정보를 불러올 수 없습니다.');
+                return;
+            }
+            const p = await res.json();
+            document.getElementById('name').value = p.name;
+            document.getElementById('price').value = p.price;
+            document.getElementById('description').value = p.description;
+        }
+
+        async function updateProduct() {
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const description = document.getElementById('description').value;
+
+            const res = await fetch(`/products/${productId}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, price, description})
+            });
+
+            if (res.ok) {
+                alert('수정 완료!');
+                window.location.href = 'list.html';
+            } else {
+                alert('수정 실패');
+            }
+        }
+
+        async function deleteProduct() {
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+
+            const res = await fetch(`/products/${productId}`, {method: 'DELETE'});
+            if (res.ok) {
+                alert('삭제 완료!');
+                window.location.href = 'list.html';
+            } else {
+                alert('삭제 실패');
+            }
+        }
+
+        window.onload = loadProduct;
+    </script>
+</head>
+<body>
+<h2>제품 상세</h2>
+<div>
+    <label>제품명: <input type="text" id="name"></label><br><br>
+    <label>가격: <input type="number" id="price"></label><br><br>
+    <label>설명: <textarea id="description"></textarea></label><br><br>
+    <button onclick="updateProduct()">수정</button>
+    <button onclick="deleteProduct()">삭제</button>
+    <a href="list.html"><button>목록으로</button></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>제품 목록</title>
+    <script>
+        async function loadProducts() {
+            const name = document.getElementById('search').value;
+            const url = name ? `/products?name=${encodeURIComponent(name)}` : '/products';
+            const res = await fetch(url);
+            const products = await res.json();
+
+            const table = document.getElementById('product-table');
+            table.innerHTML = `
+                <tr>
+                    <th>ID</th><th>이름</th><th>가격</th><th>설명</th><th>액션</th>
+                </tr>`;
+            products.forEach(p => {
+                table.innerHTML += `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td>${p.name}</td>
+                        <td>${p.price}</td>
+                        <td>${p.description}</td>
+                        <td><a href="detail.html?id=${p.id}">상세</a></td>
+                    </tr>`;
+            });
+        }
+
+        function searchProducts() {
+            loadProducts();
+        }
+
+        window.onload = loadProducts;
+    </script>
+</head>
+<body>
+<h2>제품 목록</h2>
+<div>
+    <input type="text" id="search" placeholder="제품명 검색">
+    <button onclick="searchProducts()">검색</button>
+    <a href="new.html"><button>새 제품 등록</button></a>
+</div>
+<table border="1" id="product-table"></table>
+</body>
+</html>
