@@ -22,17 +22,11 @@ public class SimpleProductService {
     }
 
     public ProductDto add(ProductDto productDto) {
-        // 1. ProductDto를 Product로 변환
         Product product = ProductDto.toEntity(productDto);
         //유효성 검사
         validationService.checkvalid(product);
-
         Product savedProduct = productRepository.add(product);
-
-        // 3. Product를 ProductDTO로 변환
         ProductDto savedProductDto = ProductDto.toDto(savedProduct);
-
-        //4. DTO를 반환
         return savedProductDto;
     }
 
@@ -60,6 +54,8 @@ public class SimpleProductService {
 
     public ProductDto update(ProductDto productDto) {
         Product product = ProductDto.toEntity(productDto);
+        //유효성 검사
+        validationService.checkvalid(product);
         Product updatedProduct = productRepository.update(product);
         ProductDto updatedProductDto = ProductDto.toDto(updatedProduct);
         return updatedProductDto;

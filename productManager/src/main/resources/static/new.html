@@ -7,12 +7,12 @@
         async function createProduct() {
             const name = document.getElementById('name').value;
             const price = document.getElementById('price').value;
-            const description = document.getElementById('description').value;
+            const amount = document.getElementById('amount').value;
 
             const res = await fetch('/products', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({name, price, description})
+                body: JSON.stringify({name, price, amount})
             });
 
             if (res.ok) {
@@ -29,7 +29,7 @@
 <div>
     <label>제품명: <input type="text" id="name"></label><br><br>
     <label>가격: <input type="number" id="price"></label><br><br>
-    <label>설명: <textarea id="description"></textarea></label><br><br>
+    <label>수량: <input type="number" id="amount"></label><br><br>
     <button onclick="createProduct()">등록</button>
     <a href="list.html"><button>목록으로</button></a>
 </div>

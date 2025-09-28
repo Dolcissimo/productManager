@@ -1,18 +1,25 @@
 package me.sungJ.productManager.Presentation;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import me.sungJ.productManager.Domain.Product;
 
 public class ProductDto {
     private Long id;
 
     @NotNull
+    @Size(min =1 , max=100)
     private String name;
 
+
     @NotNull
+    @Max(1_000_000) @Min(0)
     private Integer price;
 
     @NotNull
+    @Max(9_999) @Min(0)
     private Integer amount;
 
     public ProductDto() {

@@ -13,12 +13,10 @@ public class Product {
     @Size(min =1 , max=100)
     private String name;
 
-    @Max(1_000_000)
-    @Min(0)
+    @Max(1_000_000) @Min(0)
     private Integer price;
 
-    @Max(9_999)
-    @Min(0)
+    @Max(9_999) @Min(0)
     private Integer amount;
 
     public Product() {
