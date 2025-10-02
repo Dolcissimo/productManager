@@ -3,31 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <title>제품 목록</title>
+    <style>
+        body {
+            background-color: #2b2b2b;
+            color: #f1f1f1;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 { color: #ffffff; }
+        input, button {
+            padding: 8px 12px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+        }
+        input {
+            background-color: #444;
+            color: #f1f1f1;
+        }
+        button {
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover { background-color: #777; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #555;
+        }
+        th { background-color: #444; }
+        tr:nth-child(even) { background-color: #3a3a3a; }
+        tr:nth-child(odd) { background-color: #333; }
+        a { color: #4ea3ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* 페이지네이션 */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            margin: 0 3px;
+            padding: 6px 10px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .pagination button.active {
+            background-color: #1e88e5;
+        }
+        .pagination button:hover {
+            background-color: #777;
+        }
+    </style>
     <script>
+        let products = [];
+        let currentPage = 1;
+        const pageSize = 15;
+
         async function loadProducts() {
             const name = document.getElementById('search').value;
             const url = name ? `/products?name=${encodeURIComponent(name)}` : '/products';
             const res = await fetch(url);
-            const products = await res.json();
+            products = await res.json();
+            renderTable();
+            renderPagination();
+        }
 
+        function renderTable() {
             const table = document.getElementById('product-table');
             table.innerHTML = `
                 <tr>
                     <th>ID</th><th>이름</th><th>가격</th><th>수량</th><th>액션</th>
                 </tr>`;
-            products.forEach(p => {
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageItems = products.slice(start, end);
+
+            pageItems.forEach(p => {
                 table.innerHTML += `
                     <tr>
                         <td>${p.id}</td>
                         <td>${p.name}</td>
-                        <td>${p.price}</td>
+                        <td>${Number(p.price).toLocaleString()}</td>
                         <td>${p.amount}</td>
                         <td><a href="detail.html?id=${p.id}">상세</a></td>
                     </tr>`;
             });
         }
 
+        function renderPagination() {
+            const totalPages = Math.ceil(products.length / pageSize);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                if (i === currentPage) btn.classList.add('active');
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderTable();
+                    renderPagination();
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
+                pagination.appendChild(btn);
+            }
+        }
+
         function searchProducts() {
+            currentPage = 1;
             loadProducts();
         }
 
@@ -41,6 +134,7 @@
     <button onclick="searchProducts()">검색</button>
     <a href="new.html"><button>새 제품 등록</button></a>
 </div>
-<table border="1" id="product-table"></table>
+<table id="product-table"></table>
+<div class="pagination" id="pagination"></div>
 </body>
 </html>

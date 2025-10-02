@@ -18,8 +18,7 @@ public class ProductDto {
     @Max(1_000_000) @Min(0)
     private Integer price;
 
-    @NotNull
-    @Max(9_999) @Min(0)
+    @Max(9_999) @Min(1)
     private Integer amount;
 
     public ProductDto() {
@@ -31,7 +30,7 @@ public class ProductDto {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.amount = amount;
+        this.amount = (amount==null)? 1 : amount;
     }
 
 
@@ -49,7 +48,7 @@ public class ProductDto {
     }
 
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = (amount == null) ? 1 : amount;
     }
 
 

@@ -3,6 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>제품 등록</title>
+    <style>
+        body {
+            background-color: #2b2b2b; /* 전체 배경 */
+            color: #f1f1f1; /* 기본 글자 색상 */
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 {
+            color: #ffffff;
+        }
+        label {
+            display: block;
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #444;
+            color: #f1f1f1;
+            width: 250px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-top: 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #777;
+        }
+        a button {
+            background-color: #444;
+        }
+        a button:hover {
+            background-color: #666;
+        }
+    </style>
     <script>
         async function createProduct() {
             const name = document.getElementById('name').value;
@@ -27,9 +69,9 @@
 <body>
 <h2>새 제품 등록</h2>
 <div>
-    <label>제품명: <input type="text" id="name"></label><br><br>
-    <label>가격: <input type="number" id="price"></label><br><br>
-    <label>수량: <input type="number" id="amount"></label><br><br>
+    <label>제품명: <input type="text" id="name"></label>
+    <label>가격: <input type="number" id="price"></label>
+    <label>수량: <input type="number" id="amount"></label>
     <button onclick="createProduct()">등록</button>
     <a href="list.html"><button>목록으로</button></a>
 </div>
